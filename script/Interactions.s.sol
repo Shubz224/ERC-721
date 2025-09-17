@@ -3,6 +3,7 @@ pragma solidity ^0.8.18;
 
 import {Script} from "forge-std/Script.sol";
 import {BasicNft} from "../src/BasicNft.sol";
+import {MoodNft} from "../src/MoodNft.sol";
 
 contract MintBasicNft is Script {
     string public constant PUG =
@@ -17,6 +18,36 @@ contract MintBasicNft is Script {
     function mintNftOnContract(address contractAddress) public {
         vm.startBroadcast();
         BasicNft(contractAddress).mintNft(PUG);
+        vm.stopBroadcast();
+    }
+}
+
+
+
+contract MintMoodNft is Script {
+    function run() external {
+        address mostRecentlyDeployedMoodNft = vm.envAddress("MOOD_NFT_ADDRESS");
+        mintNftOnContract(mostRecentlyDeployedMoodNft);
+    }
+
+    function mintNftOnContract(address moodNftAddress) public {
+        vm.startBroadcast();
+        MoodNft(moodNftAddress).mintNft();
+        vm.stopBroadcast();
+    }
+}
+
+contract FlipMoodNft is Script {
+    uint256 public constant TOKEN_ID_TO_FLIP = 0;
+
+    function run() external {
+        address mostRecentlyDeployedMoodNft = vm.envAddress("MOOD_NFT_ADDRESS");
+        flipMoodNft(mostRecentlyDeployedMoodNft);
+    }
+
+    function flipMoodNft(address moodNftAddress) public {
+        vm.startBroadcast();
+        MoodNft(moodNftAddress).flipMood(TOKEN_ID_TO_FLIP);
         vm.stopBroadcast();
     }
 }
