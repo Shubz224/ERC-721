@@ -1,6 +1,6 @@
 
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.20;
+pragma solidity ^0.8.20;
 
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
@@ -29,6 +29,9 @@ contract MoodNft is ERC721, Ownable {
         s_happySvgUri = happySvgUri;
     }
 
+
+    //just entering the new token id and assign it with new contract owner 
+
     function mintNft() public {
         // how would you require payment for this NFT?
         uint256 tokenCounter = s_tokenCounter;
@@ -53,6 +56,8 @@ contract MoodNft is ERC721, Ownable {
         return "data:application/json;base64,";
     }
 
+     //missing token minting in our contcat already implemented on erc-721 
+     
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
         if (ownerOf(tokenId) == address(0)) {
             revert ERC721Metadata__URI_QueryFor_NonExistentToken();
